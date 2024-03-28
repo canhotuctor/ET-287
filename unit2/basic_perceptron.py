@@ -49,6 +49,8 @@ def train(data, outputs, p: Perceptron, activation, learning_rate, max_epochs):
         for j in range(data.shape[0]):
             run_epoch(p, data[j], activation, learning_rate, outputs[j])
 
+# Setting up the AND problem weights and 'training data' example to validate the perceptron
+
 p = Perceptron(np.random.rand(3))
 # p = Perceptron(np.array([1., 1., 1.]))
 
