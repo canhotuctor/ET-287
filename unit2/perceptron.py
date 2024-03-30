@@ -2,52 +2,42 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Perceptron:
-    def __init__(self, weights: np.array) -> None:
+    def __init__(self, n_weights: int, activation = lambda x: 1 if x > 0 else -1) -> None:
         """
         Initialize the Perceptron object.
 
         Args:
-            weights (np.array): The initial weights for the perceptron.
+            n_weights (np.array): The number of features being considered on this perceptron.
+            activation (lambda): The activation function to be used. Defaults to the step function.
         """
-        self.weights = weights
+        self.weights = np.random.rand(n_weights)
+        self.bias = np.random.rand()
+        self.activation = activation
 
-    def __init__(self, n_weights: int) -> None:
-        """
-        Initialize the Perceptron object.
-
-        Args:
-            weights (np.array): The initial weights for the perceptron.
-        """
-        self.weights = np.zeros(n_weights)
-
-    def run_epoch(self, x: np.ndarray, activation, learning_rate: float, desired_output: float):
+    def run_epoch(self, x: np.array, learning_rate: float, desired_output: float):
         """
         Run a single epoch of the perceptron training.
 
         Args:
-            p (Perceptron): The perceptron object.
             x (np.array): The input data.
-            activation (function): The activation function.
             learning_rate (float): The learning rate.
             desired_output (float): The desired output.
 
         Returns:
             None
         """
-        u = np.multiply(x, self.weights) # element-wise multiplication
-        y = activation(u) # activation function
-        e = desired_output - y # error
+        y = self.eval(x) # feed-forward
+        e = desired_output - y # error calculation
         self.weights = self.weights + learning_rate*e*x # update weights
+        self.bias = self.bias + learning_rate*e # update bias
 
-    def train(self, data, outputs, activation, learning_rate, max_epochs):
+    def train(self, data: np.ndarray, outputs: np.array, learning_rate = 0.1, max_epochs = 100):
         """
         Train the perceptron.
 
         Args:
-            data (np.array): The input data.
+            data (np.ndarray): The input data.
             outputs (np.array): The desired outputs.
-            p (Perceptron): The perceptron object.
-            activation (function): The activation function.
             learning_rate (float): The learning rate.
             max_epochs (int): The maximum number of epochs.
 
@@ -56,6 +46,27 @@ class Perceptron:
         """
         for i in range(max_epochs):
             for j in range(data.shape[0]):
-                self.run_epoch(data[j], activation, learning_rate, outputs[j])
-
-
+                self.run_epoch(data[j], learning_rate, outputs[j])
+    
+    def eval(self, inputs):
+        u = np.multiply(self.weights, inputs).sum() + self.bias
+        return self.activation(u)
+    
+    def success_rate(self, data, outputs):
+        """
+        Calculate the success rate of the perceptron.
+        
+        Args:
+            data (np.ndarray): The input data.
+            outputs (np.array): The desired outputs.
+            
+        Returns:
+            float: The success rate of the perceptron.
+        """
+        correct = 0
+        for i in range(data.shape[0]):
+            if self.eval(data[i]) == outputs[i]:
+                correct += 1
+        return correct/data.shape[0]
+        
+        pass
