@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import random
 
 class Perceptron:
     def __init__(self, n_weights: int, activation = lambda x: 1 if x > 0 else -1) -> None:
@@ -14,7 +14,7 @@ class Perceptron:
         self.bias = np.random.rand()
         self.activation = activation
 
-    def run_epoch(self, x: np.array, learning_rate: float, desired_output: float):
+    def run_epoch(self, x: np.array, learning_rate: float, desired_output: float) -> None:
         """
         Run a single epoch of the perceptron training.
 
@@ -31,7 +31,7 @@ class Perceptron:
         self.weights = self.weights + learning_rate*e*x # update weights
         self.bias = self.bias + learning_rate*e # update bias
 
-    def train(self, data: np.ndarray, outputs: np.array, learning_rate = 0.1, max_epochs = 100):
+    def train(self, data: np.ndarray, outputs: np.array, learning_rate = 0.1, max_epochs = 100) -> None:
         """
         Train the perceptron.
 
@@ -45,14 +45,15 @@ class Perceptron:
             None
         """
         for i in range(max_epochs):
-            for j in range(data.shape[0]):
+            rand = random.sample(range(data.shape[0]), data.shape[0])
+            for j in rand:
                 self.run_epoch(data[j], learning_rate, outputs[j])
     
     def eval(self, inputs):
         u = np.multiply(self.weights, inputs).sum() + self.bias
         return self.activation(u)
-    
-    def success_rate(self, data, outputs):
+
+    def success_rate(self, data, outputs) -> float:
         """
         Calculate the success rate of the perceptron.
         
