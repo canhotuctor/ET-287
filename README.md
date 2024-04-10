@@ -1,6 +1,9 @@
 # ET-287
 
-### sharing some of my work on the elective subject "Signal Processsing with Neural Networks" at Instituto Tecnológico de Aeronáutica (ITA) - Brazil.
+sharing some of my work on the elective subject "Signal Processsing with Neural Networks"
+at Instituto Tecnológico de Aeronáutica (ITA) - Brazil.
+
+---
 
 The repository is divided on units, each one containing some practical exercises and a final project. The units are:
 
