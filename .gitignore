@@ -1,0 +1,6 @@
+*.edf
+*.csv
+*.loc
+*.mat
+.idea
+*/__pycache__/*
