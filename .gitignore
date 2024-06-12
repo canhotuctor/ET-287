@@ -4,3 +4,5 @@
 *.mat
 .idea
 */__pycache__/*
+*.keras
+*.zip
