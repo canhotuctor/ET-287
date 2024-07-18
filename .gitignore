@@ -6,3 +6,6 @@
 */__pycache__/*
 *.keras
 *.zip
+final/physionet.org/
+final/datapoints/
+.vscode/
